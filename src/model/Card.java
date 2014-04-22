@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 /**
  * This is a card object class that stores information about a poker card
  * @author lianhanloh
@@ -14,15 +16,17 @@ public class Card implements Comparable<Card> {
      */
     private int num;
     private Suit suit;
+    private BufferedImage img;
     
     /**
      * Constructor
      * @param suit card's suit
      * @param num  card number
      */
-    public Card (Suit suit, int num) {
+    public Card (Suit suit, int num, BufferedImage img) {
         this.suit = suit;
         this.num = num;
+        this.img = img;
     }
     
     
