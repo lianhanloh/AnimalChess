@@ -10,6 +10,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import controller.Controller;
+import model.ChessBoard;
 import view.BoardPanel;
 
 public class AnimalChess implements Runnable {
@@ -29,8 +31,11 @@ public class AnimalChess implements Runnable {
         frame.setResizable(false);
         
         // add Panels
-        final BoardPanel board = new BoardPanel();
-        frame.add(board);
+        final BoardPanel panel = new BoardPanel(new ChessBoard());
+        frame.add(panel);
+        
+        // initialize controller
+        final Controller controller = new Controller(panel);
 
         // Put the frame on the screen
         frame.pack();

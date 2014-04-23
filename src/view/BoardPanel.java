@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import model.ChessBoard;
+
 /**
  * This class displays the state of the current board to the user
  * 
@@ -26,8 +28,14 @@ public class BoardPanel extends JPanel {
     private static final Dimension minimumSize = new Dimension(minWidth,
             minHeight);
     private static BufferedImage bg;
+    
+    /* model */
+    private static ChessBoard board;
 
-    public BoardPanel() {
+    public BoardPanel(ChessBoard board) {
+        
+        this.board = board;
+        
         setMinimumSize(minimumSize);
         try {
             bg = ImageIO.read(new File(bg_file));
@@ -47,5 +55,10 @@ public class BoardPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(minWidth, minHeight);
+    }
+    
+    /** returns chess board */
+    public ChessBoard getChessBoard () {
+        return board;
     }
 }
