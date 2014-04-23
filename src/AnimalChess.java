@@ -1,5 +1,6 @@
 /**
  * This is the main program class and runs the game
+ * 
  * @author lianhanloh
  *
  */
