@@ -15,7 +15,7 @@ import view.BoardPanel;
 public class AnimalChess implements Runnable {
 
     /** class fields */
-    private static final Dimension minDim = new Dimension(400,600);
+    private static final Dimension dim = new Dimension(400,600);
     
     @Override
     public void run() {
@@ -25,7 +25,8 @@ public class AnimalChess implements Runnable {
         
         // set up location and size
         frame.setLocation(300, 100);
-        frame.setMinimumSize(minDim);
+        frame.setMinimumSize(dim);
+        frame.setResizable(false);
         
         // add Panels
         final BoardPanel board = new BoardPanel();

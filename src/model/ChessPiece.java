@@ -2,12 +2,15 @@ package model;
 
 import java.awt.image.BufferedImage;
 
+import javax.swing.JButton;
+
 /**
  * This is a Chess Piece object
  * @author lianhanloh
  *
  */
-public class ChessPiece {
+@SuppressWarnings("serial")
+public class ChessPiece extends JButton {
     
     /**
      * class fields
