@@ -28,20 +28,31 @@ public class BoardPanel extends JPanel {
     private static final Dimension minimumSize = new Dimension(minWidth,
             minHeight);
     private static BufferedImage bg;
+    private static final int col = 7;
+    private static final int row = 9;
     
     /* model */
     private static ChessBoard board;
+    
+    /* 
+     * array of buttons 
+     * 0,0 is the top left square
+     */
+    private static final JButton[][] squares = new JButton[col][row];
 
     public BoardPanel(ChessBoard board) {
         
-        this.board = board;
-        
+        super();
+        setLayout(new GridLayout(row, col));
+        BoardPanel.board = board;  
         setMinimumSize(minimumSize);
         try {
             bg = ImageIO.read(new File(bg_file));
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
+        
+        setUpSquares();
     }
 
 
@@ -60,5 +71,17 @@ public class BoardPanel extends JPanel {
     /** returns chess board */
     public ChessBoard getChessBoard () {
         return board;
+    }
+    
+    /** initialize squares */
+    private void setUpSquares () {
+        
+        for (int y = 0; y < row; y++) {
+            for (int x = 0; x < col; x++) {
+                squares[x][y] = new JButton();
+                squares[x][y].setContentAreaFilled(false);;
+                add(squares[x][y]);
+            }
+        }
     }
 }
