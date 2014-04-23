@@ -29,8 +29,8 @@ public class GameCourt extends JPanel {
 	private JLabel status; // Current status text (i.e. Running...)
 
 	// Game constants
-	public static final int COURT_WIDTH = 100;
-	public static final int COURT_HEIGHT = 100;
+	public static final int COURT_WIDTH = 300;
+	public static final int COURT_HEIGHT = 300;
 	public static final int SQUARE_VELOCITY = 4;
 	// Update interval for timer, in milliseconds
 	public static final int INTERVAL = 35;

@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
  * is invoked.
  */
 public class Poison extends GameObj {
-	public static final String img_file = "poison.png";
+	public static final String img_file = "images/poison.png";
 	public static final int SIZE = 40;
 	public static final int INIT_X = 130;
 	public static final int INIT_Y = 130;
