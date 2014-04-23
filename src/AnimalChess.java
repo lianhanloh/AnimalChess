@@ -22,8 +22,7 @@ public class AnimalChess implements Runnable {
         
         // initialize frame and set location
         JFrame frame = new JFrame ("Animal Chess");
-//        frame.setLocation(300, 300);
-        frame.setLocationRelativeTo(null);
+        frame.setLocation(300, 100);
         
         frame.setMinimumSize(minDim);
         
