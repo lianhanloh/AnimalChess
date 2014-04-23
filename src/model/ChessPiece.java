@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * This is a Chess Piece object
+ * @author lianhanloh
+ *
+ */
 public class ChessPiece {
     
     private boolean selected;
