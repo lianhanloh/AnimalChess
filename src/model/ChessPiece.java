@@ -67,5 +67,15 @@ public class ChessPiece {
     public int getY() {
         return y;
     }
+    
+    /** return animal */
+    public Animal getAnimal () {
+        return animal;
+    }
+    
+    /** returns team */
+    public boolean getTeam() {
+        return team;
+    }
 
 }
