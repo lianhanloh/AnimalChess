@@ -1,7 +1,10 @@
 package controller;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.EventListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import view.BoardPanel;
@@ -18,29 +21,16 @@ public class Controller {
     /** class fields */
     private static ChessBoard board;
     private static BoardPanel panel;
+    private static JButton[][] squares;
     
     
     /** constructor */
     public Controller (BoardPanel panel) {
         this.panel = panel;
         this.board = panel.getChessBoard();
+        this.squares = panel.getSquares();
         
-        addEventListeners();
+        
     }
     
-    /**
-     * This method adds the mouse click listeners to each button
-     */
-    private static void addEventListeners () {
-        //TODO: add event listeners
-    }
-
-    /**
-     * This method creates an event listener for each square in the chess board
-     */
-    private static EventListener createLocationListener () {
-        //TODO: create event listener
-        
-        return null;
-    }
 }

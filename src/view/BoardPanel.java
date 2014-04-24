@@ -1,6 +1,11 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +26,8 @@ import model.ChessBoard;
 public class BoardPanel extends JPanel {
 
     private static final String bg_file = "images/dou_shou_qi_board.png";
-    private static int minHeight = 398;
-    private static int minWidth = 300;
+    private static int minHeight = 636;
+    private static int minWidth = 500;
     private static int width;
     private static int height;
     private static final Dimension minimumSize = new Dimension(minWidth,
@@ -33,17 +38,22 @@ public class BoardPanel extends JPanel {
     
     /* model */
     private static ChessBoard board;
-    
+        
     /* 
      * array of buttons 
      * 0,0 is the top left square
      */
-    private static final JButton[][] squares = new JButton[col][row];
+    private static final InvisibleButton[][] squares = 
+            new InvisibleButton[col][row];
 
     public BoardPanel(ChessBoard board) {
         
         super();
-        setLayout(new GridLayout(row, col));
+        createGlassPane();
+        JPanel grid = new JPanel();
+        grid.setLayout(new GridLayout(row, col));
+        setGlassPane(grid);
+//        grid.setVisible(true);
         BoardPanel.board = board;  
         setMinimumSize(minimumSize);
         try {
@@ -51,8 +61,13 @@ public class BoardPanel extends JPanel {
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
+       
+        JLabel background = new JLabel();
+        background.setIcon(new ImageIcon(bg));
+        getContentPane().add(background);
         
         setUpSquares();
+        addEventListeners();
     }
 
 
@@ -75,12 +90,38 @@ public class BoardPanel extends JPanel {
     
     /** initialize squares */
     private void setUpSquares () {
-        
+        //TODO: make buttons transparent. maybe don't use buttons but set event
+        // listeners in each empty component
         for (int y = 0; y < row; y++) {
             for (int x = 0; x < col; x++) {
                 squares[x][y] = new JButton();
-                squares[x][y].setContentAreaFilled(false);;
-                add(squares[x][y]);
+                squares[x][y].setContentAreaFilled(false);
+                squares[x][y].setOpaque(false);
+                grid.add(squares[x][y]);
+            }
+        }
+    }
+    
+    /** returns JButtons */
+    public JButton[][] getSquares() {
+        return squares;
+    }
+    
+    /**
+     * This method adds the mouse click listeners to each button
+     */
+    private static void addEventListeners () {
+        for (int y = 0; y < squares[0].length; y++){
+            for (int x = 0; x < squares.length; x++) {
+                if (x == 0 && y == 0) {
+                    squares[x][y].addActionListener(new ActionListener() {
+                        
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.exit(0);
+                        }
+                    });
+                }
             }
         }
     }

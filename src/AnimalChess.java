@@ -17,7 +17,7 @@ import view.BoardPanel;
 public class AnimalChess implements Runnable {
 
     /** class fields */
-    private static final Dimension dim = new Dimension(400,600);
+    private static final Dimension dim = new Dimension(500,636);
     
     @Override
     public void run() {
@@ -33,6 +33,29 @@ public class AnimalChess implements Runnable {
         // add Panels
         final BoardPanel panel = new BoardPanel(new ChessBoard());
         frame.add(panel);
+        
+        @SuppressWarnings("serial")
+        class InvisibleButton extends JButton {
+            
+            public InvisibleButton () {
+                super();
+            }
+            
+            @Override
+            public void paintComponent(Graphics g) {
+                // do nothing
+            }
+            
+        }
+        final InvisibleButton bTest = new InvisibleButton();
+        bTest.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.exit(0);
+            }
+        });
+        frame.add(bTest, BorderLayout.PAGE_END);
         
         // initialize controller
         final Controller controller = new Controller(panel);
