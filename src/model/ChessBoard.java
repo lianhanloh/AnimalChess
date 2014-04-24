@@ -1,6 +1,10 @@
 package model;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * This contains the logic for manipulating the chess board.
@@ -17,7 +21,7 @@ public class ChessBoard {
     public ChessPiece[][] board;
     private static BufferedImage img;
     /* list of animals */
-    private static Animal[] animals = {Animal.MOUSE, Animal.CAT, Animal.WOLF, 
+    private static final Animal[] ANIMALS = {Animal.MOUSE, Animal.CAT, Animal.WOLF, 
         Animal.DOG, Animal.LEOPARD, Animal.TIGER, Animal.ELEPHANT};
     /* chess pieces */
     private static ChessPiece[] pieces = new ChessPiece[16];
@@ -32,6 +36,7 @@ public class ChessBoard {
     public ChessBoard () {
         board = new ChessPiece[col][row];
         initializePieces();
+        reset();
     }
     
     /**
@@ -47,8 +52,14 @@ public class ChessBoard {
     
     /** initializes all the chess pieces */
     private void initializePieces() {
-        for (int i = 0; i < FILE_NAMES.length; i++) {
-            
+        for (int i = 0; i < pieces.length; i++) {
+            try {
+                img = ImageIO.read(new File(FILE_NAMES[i] + ".png"));
+            } catch (IOException e) {
+                System.out.println("Internal Error:" + e.getMessage());
+            }
+            pieces[i] = new ChessPiece(ANIMALS[i % 8], img, (i < 8));
         }
     }
+    
 }
