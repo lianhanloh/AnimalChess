@@ -74,10 +74,6 @@ public class Controller {
         Object source = e.getSource();
         for (int j = 0; j < squares[0].length; j++){
             for (int i = 0; i < squares.length; i++) {
-                // de-select previously selected button
-                squares[i][j].setSelected(false);
-                squares[i][j].setBorderPainted(false);
-                // selects correct button
                 if (squares[i][j] == source) {
                     x = i;
                     y = j;
@@ -86,25 +82,41 @@ public class Controller {
         }
         // process selection
         if (x != -1 && y != -1) {
+
             switch (mode) {
             case SELECT:
                 selected = model[x][y];
                 // returns if there is no chess piece at location
-                if (selected == null) return;
-                // otherwise, go to STEP mode
+                if (selected == null) {
+                    return;
+                }
+                // else go to STEP mode
                 mode = Mode.STEP;
+                // de-select all other buttons
+                for (int j = 0; j < squares[0].length; j++){
+                    for (int i = 0; i < squares.length; i++) {
+                        squares[i][j].setSelected(false);
+                        squares[i][j].setBorderPainted(false);
+                    }
+                }
+                // highlight this square
                 squares[x][y].setSelected(true);
                 break;
             case STEP:
+                int origX = selected.getX();
+                int origY = selected.getY();
                 //TODO: only if legal
-                if (board.movePiece (selected.getX(), selected.getY(), x, y)) {
-                    squares[x][y].removePiece();
+                if (board.movePiece (origX, origY, x, y)) {
+                    squares[origX][origY].removePiece();
                     // update x, y coordinates
                     selected.setX(x);
                     selected.setY(y);
                     mode = Mode.SELECT;
                     squares[x][y].setSelected(true);
                     selected = null;
+                    // de-select initially chosen square
+                    squares[origX][origY].setSelected(false);
+                    squares[origX][origY].setBorderPainted(false);
                 }
                 break;
             }
