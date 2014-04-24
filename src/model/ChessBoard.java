@@ -17,9 +17,11 @@ public class ChessBoard {
 
     private static final int COL = 7;
     private static final int ROW = 9;
-    public boolean turn; // true if player 1's, false if player 2's
+    public boolean turn; // true if red, false if black
     public ChessPiece[][] board;
     private static BufferedImage img;
+    
+    private boolean win; // true if one player has won, false otherwise
 
     /* list of animals */
     private static final Animal[] ANIMALS = {Animal.MOUSE, Animal.CAT, Animal.WOLF, 
@@ -34,7 +36,22 @@ public class ChessBoard {
         "black_leopard", "black_tiger", "black_lion", "black_elephant"};    
 
     /* match index to particular chess piece */
+    private static final int RED_MOUSE = 0;
+    private static final int RED_CAT = 1;
+    private static final int RED_WOLF = 2;
+    private static final int RED_DOG = 3;
+    private static final int RED_LEOPARD = 4;
+    private static final int RED_TIGER = 5;
+    private static final int RED_LION = 6;
+    private static final int RED_ELEPHANT = 7;
+    private static final int BLACK_MOUSE = 8;
+    private static final int BLACK_CAT = 9;
+    private static final int BLACK_WOLF = 10;
+    private static final int BLACK_DOG = 11;
+    private static final int BLACK_LEOPARD = 12;
+    private static final int BLACK_TIGER = 13;
     private static final int BLACK_LION = 14;
+    private static final int BLACK_ELEPHANT = 15;
 
     /** constructor */
     public ChessBoard () {
@@ -48,6 +65,21 @@ public class ChessBoard {
      */
     public void reset() {
         board[0][0] = pieces[BLACK_LION];
+        board[6][0] = pieces[BLACK_TIGER];
+        board[1][1] = pieces[BLACK_DOG];
+        board[5][1] = pieces[BLACK_CAT];
+        board[0][2] = pieces[BLACK_MOUSE];
+        board[2][2] = pieces[BLACK_LEOPARD];
+        board[4][2] = pieces[BLACK_WOLF];
+        board[6][2] = pieces[BLACK_ELEPHANT];
+        board[0][6] = pieces[RED_ELEPHANT];
+        board[2][6] = pieces[RED_WOLF];
+        board[4][6] = pieces[RED_LEOPARD];
+        board[6][6] = pieces[RED_MOUSE];
+        board[1][7] = pieces[RED_CAT];
+        board[5][7] = pieces[RED_DOG];
+        board[0][8] = pieces[RED_TIGER];
+        board[6][8] = pieces[RED_LION];
     }
 
     /**
@@ -71,4 +103,32 @@ public class ChessBoard {
     public ChessPiece[][] getModel () {
         return board;
     }
+    
+    /** 
+     * This method takes in a chess piece, it's current position, and it's 
+     * intended position. If the move is legal, it moves the chess piece 
+     * accordingly and returns true. Otherwise it does nothing and 
+     * returns false.
+     * @param p
+     * @param curX current x coordinate
+     * @param curY current y coordinate
+     * @param nextX intended x coordinate
+     * @param nextY intended y coordinate
+     * @return
+     */
+    public boolean movePiece (ChessPiece p, int curX, int curY, int nextX,
+            int nextY) {
+        //TODO add additional legality checks 
+        // River
+        // other pieces
+        // ability to capture
+        
+        // move piece
+        board[nextX][nextY] = board[curX][curY];
+        // remove piece from current location
+        board[curX][curY] = null;
+        
+        return true;
+    }
+    
 }

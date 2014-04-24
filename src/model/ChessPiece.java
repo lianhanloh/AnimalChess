@@ -18,7 +18,7 @@ public class ChessPiece extends JButton {
     private boolean selected;
     private boolean alive;
     private Animal animal;
-    private boolean team; // true for player 1, false for player 2
+    private boolean team; // true if red, false if black
     final private BufferedImage img;
     
     public ChessPiece (Animal animal, BufferedImage img, boolean team) {
