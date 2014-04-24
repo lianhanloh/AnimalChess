@@ -57,9 +57,8 @@ public class BoardPanel extends JPanel {
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
-
         setUpSquares();
-        addEventListeners();
+//        addEventListeners();
     }
 
 
@@ -82,8 +81,6 @@ public class BoardPanel extends JPanel {
 
     /** initialize squares */
     private void setUpSquares () {
-        //TODO: make buttons transparent. maybe don't use buttons but set event
-        // listeners in each empty component
         for (int y = 0; y < row; y++) {
             for (int x = 0; x < col; x++) {
                 squares[x][y] = new InvisibleButton();
@@ -97,32 +94,40 @@ public class BoardPanel extends JPanel {
         return squares;
     }
 
-    /**
-     * This method adds the mouse click listeners to each button
-     */
-    private static void addEventListeners () {
-        for (int y = 0; y < squares[0].length; y++){
-            for (int x = 0; x < squares.length; x++) {
-                squares[x][y].addActionListener(new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Object source = e.getSource();
-                        for (int y = 0; y < squares[0].length; y++){
-                            for (int x = 0; x < squares.length; x++) {
-                                // de-select previously selected button
-                                squares[x][y].setSelected(false);
-                                // selects correct button
-                                if (squares[x][y] == source) {
-                                    squares[x][y].setSelected(true);
-                                }
-                                // repaint each button
-                                squares[x][y].repaint();
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    }
+//    /**
+//     * This method adds the mouse click listeners to each button
+//     */
+//    private static void addEventListeners () {
+//        for (int y = 0; y < squares[0].length; y++){
+//            for (int x = 0; x < squares.length; x++) {
+//                squares[x][y].addActionListener(new ActionListener() {
+//
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        processSelection(e);
+//                    }                  
+//                });
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * This method deals with the action listener received by a button
+//     * @param e the button's action
+//     */
+//    private static void processSelection(ActionEvent e) {
+//        Object source = e.getSource();
+//        for (int y = 0; y < squares[0].length; y++){
+//            for (int x = 0; x < squares.length; x++) {
+//                // de-select previously selected button
+//                squares[x][y].setSelected(false);
+//                // selects correct button
+//                if (squares[x][y] == source) {
+//                    squares[x][y].setSelected(true);
+//                }
+//                // repaint each button
+//                squares[x][y].repaint();
+//            }
+//        }
+//    }
 }
