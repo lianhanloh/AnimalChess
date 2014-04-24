@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+
 import view.*;
 import model.*;
 
@@ -26,7 +28,11 @@ public class Controller {
         SELECT, STEP
     }
 
-    /** stores selected chess piece */
+    /** store coordinates of selected square */
+    private static int x;
+    private static int y;
+
+    /** store selected chess piece */
     private static ChessPiece selected;
 
     /** constructor */
@@ -91,10 +97,15 @@ public class Controller {
                 break;
             case STEP:
                 //TODO: only if legal
-                board.movePiece (selected, selected.getX(), selected.getY(),
-                        x, y);
-                mode = Mode.SELECT;
-                squares[x][y].setSelected(true);
+                if (board.movePiece (selected.getX(), selected.getY(), x, y)) {
+                    squares[x][y].removePiece();
+                    // update x, y coordinates
+                    selected.setX(x);
+                    selected.setY(y);
+                    mode = Mode.SELECT;
+                    squares[x][y].setSelected(true);
+                    selected = null;
+                }
                 break;
             }
         }

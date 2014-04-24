@@ -9,6 +9,6 @@ package model;
  *
  */
 
-public enum Animal {
-    MOUSE, CAT, WOLF, DOG, LEOPARD, TIGER, ELEPHANT
+enum Animal {
+    MOUSE, CAT, WOLF, DOG, LEOPARD, TIGER, LION, ELEPHANT
 }

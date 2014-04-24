@@ -68,6 +68,16 @@ public class ChessPiece {
         return y;
     }
     
+    /** set x coordinate */
+    public void setX (int x) {
+        this.x = x;
+    }
+    
+    /** set y coordinate */
+    public void setY (int y) {
+        this.y = y;
+    }
+    
     /** return animal */
     public Animal getAnimal () {
         return animal;
@@ -78,4 +88,42 @@ public class ChessPiece {
         return team;
     }
 
+    /** overrides toString method */
+    @Override
+    public String toString() {
+        String a = "";
+        switch (animal) {
+        case MOUSE:
+            a = "mouse";
+            break;
+        case CAT:
+            a = "cat";
+            break;
+        case WOLF:
+            a = "wolf";
+            break;
+        case DOG:
+            a = "dog";
+            break;
+        case LEOPARD:
+            a = "leopard";
+            break;
+        case TIGER:
+            a = "tiger";
+            break;
+        case LION:
+            a = "lion";
+            break;
+        case ELEPHANT:
+            a = "elephant";
+            break;
+        }
+        if (team) {
+            a = "red " + a;
+        }
+        else {
+            a = "black " + a;
+        }
+        return a;
+    }
 }

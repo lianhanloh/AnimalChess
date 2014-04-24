@@ -36,8 +36,6 @@ public class InvisibleButton extends JButton {
     public void paintComponent(Graphics g) {
         // displays chess piece if visible
         if (visible) {
-//            setBorderPainted(true);
-//            setBorder(BorderFactory.createLineBorder(img_border, thickness));
             width = getWidth() - 5;
             height = getHeight() - 5;
             g.drawImage(img, 5, 5, width, height, null);
@@ -56,6 +54,13 @@ public class InvisibleButton extends JButton {
     public void showPiece(ChessPiece p) {
         img = p.getImage();
         visible = true;
+        repaint();
+    }
+    
+    /** removes image of chess piece */
+    public void removePiece() {
+        img = null;
+        visible = false;
     }
 
 }

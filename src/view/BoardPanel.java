@@ -35,7 +35,7 @@ public class BoardPanel extends JPanel {
     /** model */
     private ChessBoard board;
     private ChessPiece[][] model;
-
+    
     /** 
      * array of buttons 
      * 0,0 is the top left square
@@ -62,6 +62,7 @@ public class BoardPanel extends JPanel {
         }
         // sets up the squares of buttons
         setUpSquares();
+        
     }
 
     @Override
@@ -114,5 +115,5 @@ public class BoardPanel extends JPanel {
             }
         }
     }
-
+    
 }
