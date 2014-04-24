@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import controller.Controller;
 import model.ChessBoard;
 
 /**
@@ -32,10 +33,12 @@ public class BoardPanel extends JPanel {
     private static BufferedImage bg;
     private static final int col = 7;
     private static final int row = 9;
-    
+
     /* model */
     private static ChessBoard board;
-        
+    /* controller */
+//    private static Controller controller;
+
     /* 
      * array of buttons 
      * 0,0 is the top left square
@@ -43,8 +46,8 @@ public class BoardPanel extends JPanel {
     private static final InvisibleButton[][] squares = 
             new InvisibleButton[col][row];
 
-    public BoardPanel(ChessBoard board) {
-        
+    public BoardPanel(ChessBoard board/*, Controller controller*/) {
+
         super();
         setLayout(new GridLayout(row, col));
         BoardPanel.board = board;  
@@ -54,7 +57,7 @@ public class BoardPanel extends JPanel {
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
-       
+
         setUpSquares();
         addEventListeners();
     }
@@ -71,12 +74,12 @@ public class BoardPanel extends JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(minWidth, minHeight);
     }
-    
+
     /** returns chess board */
     public ChessBoard getChessBoard () {
         return board;
     }
-    
+
     /** initialize squares */
     private void setUpSquares () {
         //TODO: make buttons transparent. maybe don't use buttons but set event
@@ -88,27 +91,37 @@ public class BoardPanel extends JPanel {
             }
         }
     }
-    
+
     /** returns buttons */
     public InvisibleButton[][] getSquares() {
         return squares;
     }
-    
+
     /**
      * This method adds the mouse click listeners to each button
      */
     private static void addEventListeners () {
         for (int y = 0; y < squares[0].length; y++){
             for (int x = 0; x < squares.length; x++) {
-                if (x == 0 && y == 0) {
-                    squares[x][y].addActionListener(new ActionListener() {
-                        
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            System.exit(0);
+                squares[x][y].addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Object source = e.getSource();
+                        for (int y = 0; y < squares[0].length; y++){
+                            for (int x = 0; x < squares.length; x++) {
+                                // de-select previously selected button
+                                squares[x][y].setSelected(false);
+                                // selects correct button
+                                if (squares[x][y] == source) {
+                                    squares[x][y].setSelected(true);
+                                }
+                                // repaint each button
+                                squares[x][y].repaint();
+                            }
                         }
-                    });
-                }
+                    }
+                });
             }
         }
     }
