@@ -9,8 +9,8 @@ import javax.swing.JButton;
  * @author lianhanloh
  *
  */
-@SuppressWarnings("serial")
-public class ChessPiece extends JButton {
+
+public class ChessPiece {
     
     /**
      * class fields
@@ -19,6 +19,10 @@ public class ChessPiece extends JButton {
     private boolean alive;
     private Animal animal;
     private boolean team; // true if red, false if black
+    /** current x coordinate */
+    private int x;
+    /** current y coordinate */
+    private int y;
     final private BufferedImage img;
     
     public ChessPiece (Animal animal, BufferedImage img, boolean team) {
@@ -52,6 +56,16 @@ public class ChessPiece extends JButton {
     /** return chess piece's image */
     public BufferedImage getImage () {
         return img;
+    }
+    
+    /** return current x coordinate */
+    public int getX() {
+        return x;
+    }
+    
+    /** return current y coordinate */
+    public int getY() {
+        return y;
     }
 
 }

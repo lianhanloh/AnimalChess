@@ -13,22 +13,33 @@ import model.*;
  *
  */
 public class Controller {
-    
+
     /** class fields */
     private static ChessBoard board;
     private static BoardPanel panel;
     private static InvisibleButton[][] squares;
-    
-    
+    private static ChessPiece[][] model;
+    private static Mode mode;
+
+    /** selection modes */
+    public enum Mode {
+        SELECT, STEP
+    }
+
+    /** stores selected chess piece */
+    private static ChessPiece selected;
+
     /** constructor */
     public Controller (BoardPanel panel) {
         this.panel = panel;
         this.board = panel.getChessBoard();
         this.squares = panel.getSquares();
-        
+        this.model = board.getModel();
+        this.mode = Mode.SELECT;
+
         addEventListeners();
     }
-    
+
     /**
      * This method adds the mouse click listeners to each button
      */
@@ -45,25 +56,48 @@ public class Controller {
             }
         }
     }
-    
+
     /**
      * This method deals with the action listener received by a button
      * @param e the button's action
      */
     private static void processSelection(ActionEvent e) {
+        int x = -1;
+        int y = -1;
+        // find out which square was selected 
         Object source = e.getSource();
-        for (int y = 0; y < squares[0].length; y++){
-            for (int x = 0; x < squares.length; x++) {
+        for (int j = 0; j < squares[0].length; j++){
+            for (int i = 0; i < squares.length; i++) {
                 // de-select previously selected button
-                squares[x][y].setSelected(false);
-                squares[x][y].setBorderPainted(false);
+                squares[i][j].setSelected(false);
+                squares[i][j].setBorderPainted(false);
                 // selects correct button
-                if (squares[x][y] == source) {
-                    squares[x][y].setSelected(true);
+                if (squares[i][j] == source) {
+                    x = i;
+                    y = j;
                 }
-                // repaint each button
-                squares[x][y].repaint();
             }
         }
+        // process selection
+        if (x != -1 && y != -1) {
+            switch (mode) {
+            case SELECT:
+                selected = model[x][y];
+                // returns if there is no chess piece at location
+                if (selected == null) return;
+                // otherwise, go to STEP mode
+                mode = Mode.STEP;
+                squares[x][y].setSelected(true);
+                break;
+            case STEP:
+                //TODO: only if legal
+                board.movePiece (selected, selected.getX(), selected.getY(),
+                        x, y);
+                mode = Mode.SELECT;
+                squares[x][y].setSelected(true);
+                break;
+            }
+        }
+        panel.repaint();
     }
 }

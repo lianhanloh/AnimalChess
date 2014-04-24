@@ -32,11 +32,11 @@ public class BoardPanel extends JPanel {
     private static final int COL = 7;
     private static final int ROW = 9;
 
-    /* model */
-    private static ChessBoard board;
-    private static ChessPiece[][] model;
+    /** model */
+    private ChessBoard board;
+    private ChessPiece[][] model;
 
-    /* 
+    /** 
      * array of buttons 
      * 0,0 is the top left square
      */
@@ -64,11 +64,18 @@ public class BoardPanel extends JPanel {
         setUpSquares();
     }
 
+    @Override
     public void paintComponent (Graphics g) {
         width = getWidth();
         height = getHeight();
         super.paintComponent(g);
         g.drawImage(bg, 0, 0, width, height, null);
+        for (int j = 0; j < squares[0].length; j++){
+            for (int i = 0; i < squares.length; i++) {
+                // repaint each button
+                squares[i][j].repaint();
+            }
+        }
         drawPieces();
     }
 
