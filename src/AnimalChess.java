@@ -5,19 +5,13 @@
  *
  */
 
-import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
 
-import controller.Controller;
-import model.ChessBoard;
-import view.BoardPanel;
+import view.GUI;
 
 public class AnimalChess implements Runnable {
 
     /** class fields */
-    private static final Dimension dim = new Dimension(500,636);
     
     @Override
     public void run() {
@@ -27,15 +21,11 @@ public class AnimalChess implements Runnable {
         
         // set up location and size
         frame.setLocation(300, 100);
-        frame.setMinimumSize(dim);
         frame.setResizable(false);
         
-        // add Panels
-        final BoardPanel panel = new BoardPanel(new ChessBoard());
-        frame.add(panel);
-       
-        // initialize controller
-        final Controller controller = new Controller(panel);
+        // add GUI
+        final GUI GUI = new GUI();
+        frame.add(GUI);
 
         // Put the frame on the screen
         frame.pack();

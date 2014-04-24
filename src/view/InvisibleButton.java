@@ -5,16 +5,20 @@ import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+
 /**
  * This is an invisible button which has the same functionality as a button
  * but does not appear to the viewer
- * 
  * @author lianhanloh
  *
  */
 
 @SuppressWarnings("serial")
 public class InvisibleButton extends JButton {
+    
+    /** class fields */
+    private int thickness = 3;
+    private Color color = Color.blue;
     
     public InvisibleButton () {
         super();
@@ -26,7 +30,7 @@ public class InvisibleButton extends JButton {
         // paints border if selected
         if (isSelected()) {
             setBorderPainted(true);
-            setBorder(BorderFactory.createLineBorder(Color.yellow));
+            setBorder(BorderFactory.createLineBorder(color, thickness));
             paintBorder(g);
         }
         // un-highlight previously selected border

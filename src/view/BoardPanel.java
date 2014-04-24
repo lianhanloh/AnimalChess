@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import controller.Controller;
 import model.ChessBoard;
 
 /**
@@ -36,8 +33,6 @@ public class BoardPanel extends JPanel {
 
     /* model */
     private static ChessBoard board;
-    /* controller */
-//    private static Controller controller;
 
     /* 
      * array of buttons 
@@ -51,14 +46,13 @@ public class BoardPanel extends JPanel {
         super();
         setLayout(new GridLayout(row, col));
         BoardPanel.board = board;  
-        setMinimumSize(minimumSize);
+//        setMinimumSize(minimumSize);
         try {
             bg = ImageIO.read(new File(bg_file));
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
         setUpSquares();
-//        addEventListeners();
     }
 
 
@@ -71,7 +65,7 @@ public class BoardPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(minWidth, minHeight);
+        return minimumSize;
     }
 
     /** returns chess board */
