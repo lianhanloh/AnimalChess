@@ -3,9 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -49,11 +46,7 @@ public class BoardPanel extends JPanel {
     public BoardPanel(ChessBoard board) {
         
         super();
-        createGlassPane();
-        JPanel grid = new JPanel();
-        grid.setLayout(new GridLayout(row, col));
-        setGlassPane(grid);
-//        grid.setVisible(true);
+        setLayout(new GridLayout(row, col));
         BoardPanel.board = board;  
         setMinimumSize(minimumSize);
         try {
@@ -62,10 +55,6 @@ public class BoardPanel extends JPanel {
             System.out.println("Internal Error:" + e.getMessage());
         }
        
-        JLabel background = new JLabel();
-        background.setIcon(new ImageIcon(bg));
-        getContentPane().add(background);
-        
         setUpSquares();
         addEventListeners();
     }
@@ -94,16 +83,14 @@ public class BoardPanel extends JPanel {
         // listeners in each empty component
         for (int y = 0; y < row; y++) {
             for (int x = 0; x < col; x++) {
-                squares[x][y] = new JButton();
-                squares[x][y].setContentAreaFilled(false);
-                squares[x][y].setOpaque(false);
-                grid.add(squares[x][y]);
+                squares[x][y] = new InvisibleButton();
+                add(squares[x][y]);
             }
         }
     }
     
-    /** returns JButtons */
-    public JButton[][] getSquares() {
+    /** returns buttons */
+    public InvisibleButton[][] getSquares() {
         return squares;
     }
     
