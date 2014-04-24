@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import model.ChessBoard;
+import model.*;
 
 /**
  * This class displays the state of the current board to the user
@@ -33,7 +33,8 @@ public class BoardPanel extends JPanel {
     private static final int ROW = 9;
 
     /* model */
-    private ChessBoard board;
+    private static ChessBoard board;
+    private static ChessPiece[][] model;
 
     /* 
      * array of buttons 
@@ -47,11 +48,12 @@ public class BoardPanel extends JPanel {
      * @param board a chess board model
      */
     public BoardPanel(ChessBoard board) {
-        
+
         super();
         // set up grid layout 
         setLayout(new GridLayout(ROW, COL));
         this.board = board;  
+        this.model = board.getModel();
         setMinimumSize(MIN_SIZE);
         try {
             bg = ImageIO.read(new File(BG_FILE));
@@ -67,6 +69,7 @@ public class BoardPanel extends JPanel {
         height = getHeight();
         super.paintComponent(g);
         g.drawImage(bg, 0, 0, width, height, null);
+        drawPieces();
     }
 
     @Override
@@ -92,6 +95,17 @@ public class BoardPanel extends JPanel {
     /** returns buttons */
     public InvisibleButton[][] getSquares() {
         return squares;
+    }
+
+    /** draws chess pieces */
+    private void drawPieces () {
+        for (int y = 0; y < ROW; y++) {
+            for (int x = 0; x < COL; x++) {
+                if (model[x][y] != null) {
+                    squares[x][y].showPiece(model[x][y]);
+                }
+            }
+        }
     }
 
 }

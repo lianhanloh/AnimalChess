@@ -56,6 +56,7 @@ public class Controller {
             for (int x = 0; x < squares.length; x++) {
                 // de-select previously selected button
                 squares[x][y].setSelected(false);
+                squares[x][y].setBorderPainted(false);
                 // selects correct button
                 if (squares[x][y] == source) {
                     squares[x][y].setSelected(true);

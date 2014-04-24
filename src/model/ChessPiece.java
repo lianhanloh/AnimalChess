@@ -48,4 +48,10 @@ public class ChessPiece extends JButton {
     public void revive() {
         this.alive = true;
     }
+    
+    /** return chess piece's image */
+    public BufferedImage getImage () {
+        return img;
+    }
+
 }
