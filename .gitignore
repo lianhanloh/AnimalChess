@@ -70,3 +70,5 @@ local.properties
 # PDT-specific
 .buildpath
 
+# test files
+src/test/
