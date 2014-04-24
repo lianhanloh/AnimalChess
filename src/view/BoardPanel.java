@@ -20,6 +20,7 @@ import model.ChessBoard;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
+    /** class fields */
     private static final String bg_file = "images/dou_shou_qi_board.png";
     private static int minHeight = 636;
     private static int minWidth = 500;
@@ -32,7 +33,7 @@ public class BoardPanel extends JPanel {
     private static final int row = 9;
 
     /* model */
-    private static ChessBoard board;
+    private ChessBoard board;
 
     /* 
      * array of buttons 
@@ -41,20 +42,25 @@ public class BoardPanel extends JPanel {
     private static final InvisibleButton[][] squares = 
             new InvisibleButton[col][row];
 
-    public BoardPanel(ChessBoard board/*, Controller controller*/) {
-
+    /** 
+     * Constructs a Board Panel
+     * @param board a chess board model
+     */
+    public BoardPanel(ChessBoard board) {
+        
         super();
+        // set up grid layout 
         setLayout(new GridLayout(row, col));
-        BoardPanel.board = board;  
-//        setMinimumSize(minimumSize);
+        this.board = board;  
+        setMinimumSize(minimumSize);
         try {
             bg = ImageIO.read(new File(bg_file));
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
+        // sets up the squares of buttons
         setUpSquares();
     }
-
 
     public void paintComponent (Graphics g) {
         width = getWidth();
