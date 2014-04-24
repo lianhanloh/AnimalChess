@@ -21,16 +21,16 @@ import model.ChessBoard;
 public class BoardPanel extends JPanel {
 
     /** class fields */
-    private static final String bg_file = "images/dou_shou_qi_board.png";
-    private static int minHeight = 636;
-    private static int minWidth = 500;
+    private static final String BG_FILE = "images/dou_shou_qi_board.png";
+    private static final int MIN_HEIGHT = 636;
+    private static final int MIN_WIDTH = 500;
     private static int width;
     private static int height;
-    private static final Dimension minimumSize = new Dimension(minWidth,
-            minHeight);
+    private static final Dimension MIN_SIZE = new Dimension(MIN_WIDTH,
+            MIN_HEIGHT);
     private static BufferedImage bg;
-    private static final int col = 7;
-    private static final int row = 9;
+    private static final int COL = 7;
+    private static final int ROW = 9;
 
     /* model */
     private ChessBoard board;
@@ -40,7 +40,7 @@ public class BoardPanel extends JPanel {
      * 0,0 is the top left square
      */
     private static final InvisibleButton[][] squares = 
-            new InvisibleButton[col][row];
+            new InvisibleButton[COL][ROW];
 
     /** 
      * Constructs a Board Panel
@@ -50,11 +50,11 @@ public class BoardPanel extends JPanel {
         
         super();
         // set up grid layout 
-        setLayout(new GridLayout(row, col));
+        setLayout(new GridLayout(ROW, COL));
         this.board = board;  
-        setMinimumSize(minimumSize);
+        setMinimumSize(MIN_SIZE);
         try {
-            bg = ImageIO.read(new File(bg_file));
+            bg = ImageIO.read(new File(BG_FILE));
         } catch (IOException e) {
             System.out.println("Internal Error:" + e.getMessage());
         }
@@ -71,7 +71,7 @@ public class BoardPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return minimumSize;
+        return MIN_SIZE;
     }
 
     /** returns chess board */
@@ -81,8 +81,8 @@ public class BoardPanel extends JPanel {
 
     /** initialize squares */
     private void setUpSquares () {
-        for (int y = 0; y < row; y++) {
-            for (int x = 0; x < col; x++) {
+        for (int y = 0; y < ROW; y++) {
+            for (int x = 0; x < COL; x++) {
                 squares[x][y] = new InvisibleButton();
                 add(squares[x][y]);
             }
