@@ -159,10 +159,10 @@ public class ChessBoard {
     private boolean inRiver(int x, int y) {
         return (((x > 0 && x < 3) || (x > 3 && x < 6)) && (y > 2 && y < 6));
     }
-    
+
     /** 
      * returns true if exception should be made because lions and tigers
-     * can jump over river
+     * can jump over river, and only if there's no rat in their way
      */
     private boolean jumpException(Animal a, int curX, int curY, int nextX, 
             int nextY) {
@@ -175,6 +175,13 @@ public class ChessBoard {
         if ((curX == 0 || curX == 3 || curX == 6) && (curY > 2 && curY < 6)) {
             // return true if intended position is across the river
             if (Math.abs(nextX - curX) == 3 && (nextY == curY)) {
+                // check if there's a mouse in the river blocking the jump
+                for (int i = 1; i < 3; i++) {
+                    int sign = (nextX - curX) % 2;
+                    if (board[curX + sign * i][curY] != null) {
+                        return false;
+                    }
+                }
                 return true;
             }
         }
@@ -183,10 +190,17 @@ public class ChessBoard {
         if ((curY == 2 || curY == 6) && (curX == 1 || curX == 2 || curX == 4
                 || curX == 5)) {
             if (Math.abs(nextY - curY) == 4 && (nextX == curX)) {
+                // check if there's a mouse in the river blocking the jump
+                for (int i = 1; i < 4; i++) {
+                    int sign = (nextY - curY) % 3;
+                    if (board[curX][curY + sign * i] != null) {
+                        return false;
+                    }
+                }
                 return true;
             }
         }
-        
+
         // else return false
         return false;
     }
