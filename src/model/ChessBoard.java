@@ -58,6 +58,7 @@ public class ChessBoard {
     public ChessBoard () {
         board = new ChessPiece[COL][ROW];
         initializePieces();
+        this.player = true; // red starts
         reset();
     }
 
@@ -101,8 +102,7 @@ public class ChessBoard {
         if (curX == nextX && curY == nextY) {
             return false;
         }
-        // TODO: check if piece belongs to current player
-        boolean team = cur.getTeam();
+        
         Animal a = cur.getAnimal();
         // return false if next step is not accessible by chess piece
         if (! accessible(a, curX, curY, nextX, nextY)) {

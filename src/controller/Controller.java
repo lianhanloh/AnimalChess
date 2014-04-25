@@ -95,6 +95,11 @@ public class Controller {
                 if (selected == null) {
                     return;
                 }
+                // returns if piece does not belong to current player
+                boolean team = selected.getTeam();
+                if (team != board.getTurn()) {
+                    return;
+                }
                 // else go to STEP mode
                 mode = Mode.STEP;
                 // de-select all other buttons
@@ -128,7 +133,7 @@ public class Controller {
                     squares[origX][origY].setSelected(false);
                     squares[origX][origY].setBorderPainted(false);
                     // update turn to next player's turn
-                    board.setTurn(! board.getTurn());
+                    board.setTurn(!board.getTurn());
                 }
                 break;
             }

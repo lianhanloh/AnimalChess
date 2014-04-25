@@ -2,8 +2,6 @@ package model;
 
 import java.awt.image.BufferedImage;
 
-import javax.swing.JButton;
-
 /**
  * This is a Chess Piece object
  * @author lianhanloh
