@@ -31,7 +31,7 @@ public class ChessPiece implements Comparable<ChessPiece> {
 
     /** captures chess piece */
     public void capture() {
-        alive = false;
+        this.alive = false;
     }
 
     /** revive piece (for reset purpose) */

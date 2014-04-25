@@ -109,8 +109,32 @@ public class ChessBoard {
             return false;
         }
 
-        //TODO: ability to capture if other piece is present
-
+        // capture target if square is occupied by opponent piece and can be 
+        // capture by cur piece
+        if (board[nextX][nextY] != null) {
+            ChessPiece target = board[nextX][nextY];
+            Animal b = target.getAnimal();
+            // return false if target chess piece has higher rank
+            // unless cur is mouse
+            if (cur.compareTo(target) < 0 && ! a.toString().equals("MOUSE")) {
+                return false;
+            }
+            // mouse can only capture elephant 
+            // note mouse cannot capture elephant if mouse is in river
+            if ((a.toString().equals("MOUSE")
+                    && !b.toString().equals("ELEPHANT"))
+                    || inRiver(curX, curY)){
+                return false;
+            }
+            // elephant cannot capture mouse
+            if (a.toString().equals("ELEPHANT") 
+                    && b.toString().equals("MOUSE")) {
+                return false;
+            }
+            // capture target piece
+            target.capture();
+        }
+        
         // move piece
         board[nextX][nextY] = board[curX][curY];
         // remove piece from current location
