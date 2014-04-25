@@ -174,14 +174,18 @@ public class ChessBoard {
         // and is meant to jump to the other side
         if ((curX == 0 || curX == 3 || curX == 6) && (curY > 2 && curY < 6)) {
             // return true if intended position is across the river
-            if (Math.abs(nextX - curX) == 3 && (nextY - curY == 0)) {
-                System.out.println("reached");
+            if (Math.abs(nextX - curX) == 3 && (nextY == curY)) {
                 return true;
             }
         }
         // check if lion/tiger is above or below river and meant to jump to
         // the other side
-//        if 
+        if ((curY == 2 || curY == 6) && (curX == 1 || curX == 2 || curX == 4
+                || curX == 5)) {
+            if (Math.abs(nextY - curY) == 4 && (nextX == curX)) {
+                return true;
+            }
+        }
         
         // else return false
         return false;
