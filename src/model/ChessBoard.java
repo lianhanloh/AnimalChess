@@ -109,7 +109,6 @@ public class ChessBoard {
             return false;
         }
         
-        // River
         // other pieces
         // ability to capture
         
@@ -136,7 +135,17 @@ public class ChessBoard {
             int nextY) {
         //TODO: implement method
         
+        // returns false if intended square is in river, and animal is not mouse
+        if (inRiver(nextX, nextY) && ! a.toString().equals("MOUSE")) {
+            return false;
+        }
+        
         return true;
+    }
+    
+    /** returns true if square is in river. takes in its x,y coordinates */
+    private boolean inRiver(int x, int y) {
+        return (((x > 0 && x < 3) || (x > 3 && x < 6)) && (y > 2 && y < 6));
     }
     
     /** returns current player turn - true if red's, false if black */
