@@ -5,6 +5,9 @@ package model;
  * a particular chess piece. This is used to enforce the animal ranking rules
  * and also to allocate the appropriate piece image.
  * 
+ * Note: ordinal matters for this declaration since animal ranking is defined
+ * by the order these animals are declare
+ * 
  * @author lianhanloh
  *
  */

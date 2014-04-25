@@ -50,13 +50,14 @@ public class InvisibleButton extends JButton {
         // does not paint anything otherwise
     }
 
-    /** displays image of chess piece */
+    /** displays image of chess piece if it is alive */
     public void showPiece(ChessPiece p) {
-        img = p.getImage();
-        visible = true;
-        repaint();
+        if (p.isAlive()) {
+            img = p.getImage();
+            visible = true;
+        }
     }
-    
+
     /** removes image of chess piece */
     public void removePiece() {
         img = null;

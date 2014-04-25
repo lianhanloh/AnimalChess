@@ -105,14 +105,19 @@ public class Controller {
             case STEP:
                 int origX = selected.getX();
                 int origY = selected.getY();
-                //TODO: only if legal
+                // get model to move piece if legal
                 if (board.movePiece (origX, origY, x, y)) {
+                    // remove piece from original location if it
+                    // was moved successfully
                     squares[origX][origY].removePiece();
-                    // update x, y coordinates
+                    // update it's x, y coordinates
                     selected.setX(x);
                     selected.setY(y);
+                    // return to select mode
                     mode = Mode.SELECT;
+                    // select the square the piece moved to 
                     squares[x][y].setSelected(true);
+                    // set selected piece to null
                     selected = null;
                     // de-select initially chosen square
                     squares[origX][origY].setSelected(false);

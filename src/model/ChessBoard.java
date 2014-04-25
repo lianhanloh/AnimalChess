@@ -61,6 +61,64 @@ public class ChessBoard {
         reset();
     }
 
+    /** initializes all the chess pieces */
+    private void initializePieces() {
+        for (int i = 0; i < pieces.length; i++) {
+            try {
+                img = ImageIO.read(new File("images/pieces/" 
+                        + FILE_NAMES[i] + ".png"));
+            } catch (IOException e) {
+                System.out.println("Internal Error:" + e.getMessage());
+            }
+            pieces[i] = new ChessPiece(ANIMALS[i % 8], img, (i < 8));
+        }
+    }
+
+    /** returns chess board model */
+    public ChessPiece[][] getModel () {
+        return board;
+    }
+    
+    /** 
+     * This method takes in a current position, and an intended position. 
+     * If the move is legal, it moves the chess piece accordingly and returns 
+     * true. Otherwise it does nothing and returns false.
+     * @param curX current x coordinate
+     * @param curY current y coordinate
+     * @param nextX intended x coordinate
+     * @param nextY intended y coordinate
+     * @return
+     */
+    public boolean movePiece (int curX, int curY, int nextX, int nextY) {
+        //TODO add additional legality checks 
+        ChessPiece cur = board[curX][curY];
+        // return false if there's no piece at current location
+        if (cur == null) {
+            return false;
+        }
+        
+        // check if next position is same as current
+        if (curX == nextX && curY == nextY) {
+            return false;
+        }
+        
+        // River
+        // other pieces
+        // ability to capture
+        
+        // move piece
+        board[nextX][nextY] = board[curX][curY];
+        // remove piece from current location
+        board[curX][curY] = null;
+        
+        return true;
+    }
+    
+    /** returns chess pieces */
+    public ChessPiece[] getPieces () {
+        return pieces;
+    }
+    
     /**
      * resets chess pieces to start position
      */
@@ -113,64 +171,10 @@ public class ChessBoard {
         board[6][8] = pieces[RED_LION];
         pieces[RED_LION].setX(6);
         pieces[RED_LION].setY(8);
-    }
-
-    /**
-     * select chess piece
-     */
-
-    /** initializes all the chess pieces */
-    private void initializePieces() {
+        // revive all pieces
         for (int i = 0; i < pieces.length; i++) {
-            try {
-                img = ImageIO.read(new File("images/pieces/" 
-                        + FILE_NAMES[i] + ".png"));
-            } catch (IOException e) {
-                System.out.println("Internal Error:" + e.getMessage());
-            }
-            pieces[i] = new ChessPiece(ANIMALS[i % 8], img, (i < 8));
+            pieces[i].revive();
         }
-    }
-
-    /** returns chess board model */
-    public ChessPiece[][] getModel () {
-        return board;
-    }
-    
-    /** 
-     * This method takes in a chess piece, it's current position, and it's 
-     * intended position. If the move is legal, it moves the chess piece 
-     * accordingly and returns true. Otherwise it does nothing and 
-     * returns false.
-     * @param p
-     * @param curX current x coordinate
-     * @param curY current y coordinate
-     * @param nextX intended x coordinate
-     * @param nextY intended y coordinate
-     * @return
-     */
-    public boolean movePiece (/*ChessPiece p, */int curX, int curY, int nextX,
-            int nextY) {
-        //TODO add additional legality checks 
-        // check if next position is same as current
-        if (curX == nextX && curY == nextY) {
-            return false;
-        }
-        // River
-        // other pieces
-        // ability to capture
-        
-        // move piece
-        board[nextX][nextY] = board[curX][curY];
-        // remove piece from current location
-        board[curX][curY] = null;
-        
-        return true;
-    }
-    
-    /** returns chess pieces */
-    public ChessPiece[] getPieces () {
-        return pieces;
     }
     
 }
