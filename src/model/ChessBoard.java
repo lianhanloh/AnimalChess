@@ -137,7 +137,7 @@ public class ChessBoard {
         // return false if intended square is more than one step away
         // make exception for lion and tiger if next to river
         if (!oneStepAway(curX, curY, nextX, nextY) 
-                && ! jumpException(a, curX, curY, nextX, nextY)) {
+                && !jumpException(a, curX, curY, nextX, nextY)) {
             return false;
         }
 
@@ -166,9 +166,24 @@ public class ChessBoard {
      */
     private boolean jumpException(Animal a, int curX, int curY, int nextX, 
             int nextY) {
-        if (a.toString() != "LION" || a.toString() != "TIGER") {
+        // return false if animal is not lion or tiger
+        if (a.toString() != "LION" && a.toString() != "TIGER") {
             return false;
         }
+        // check if lion/tiger is on left or right side of river
+        // and is meant to jump to the other side
+        if ((curX == 0 || curX == 3 || curX == 6) && (curY > 2 && curY < 6)) {
+            // return true if intended position is across the river
+            if (Math.abs(nextX - curX) == 3 && (nextY - curY == 0)) {
+                System.out.println("reached");
+                return true;
+            }
+        }
+        // check if lion/tiger is above or below river and meant to jump to
+        // the other side
+//        if 
+        
+        // else return false
         return false;
     }
 
