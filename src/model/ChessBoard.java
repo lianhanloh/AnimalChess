@@ -97,8 +97,15 @@ public class ChessBoard {
             return false;
         }
         
-        // check if next position is same as current
+        // return false if next position is same as current
         if (curX == nextX && curY == nextY) {
+            return false;
+        }
+        // TODO: check if piece belongs to current player
+        boolean team = cur.getTeam();
+        Animal a = cur.getAnimal();
+        // return false if next step is not accessible by chess piece
+        if (! accessible(a, curX, curY, nextX, nextY)) {
             return false;
         }
         
@@ -110,6 +117,24 @@ public class ChessBoard {
         board[nextX][nextY] = board[curX][curY];
         // remove piece from current location
         board[curX][curY] = null;
+        
+        return true;
+    }
+    
+    /**
+     * Checks if next location is accessible by chess piece 
+     * Note it does not take into account whether that location is occupied by
+     * another chess piece
+     * @param cur chess piece's animal
+     * @param curX current X coordinate
+     * @param curY current Y coordinate
+     * @param nextX intended X coordinate
+     * @param nextY intended Y coordinate
+     * @return
+     */
+    private boolean accessible (Animal a, int curX, int curY, int nextX, 
+            int nextY) {
+        //TODO: implement method
         
         return true;
     }
