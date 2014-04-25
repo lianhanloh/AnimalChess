@@ -20,7 +20,7 @@ public class ChessBoard {
     public boolean player; // true if red's turn, false if black's
     public ChessPiece[][] board;
     private static BufferedImage img;
-    
+
     private boolean win; // true if one player has won, false otherwise
 
     /* list of animals */
@@ -79,7 +79,7 @@ public class ChessBoard {
     public ChessPiece[][] getModel () {
         return board;
     }
-    
+
     /** 
      * This method takes in a current position, and an intended position. 
      * If the move is legal, it moves the chess piece accordingly and returns 
@@ -97,29 +97,29 @@ public class ChessBoard {
         if (cur == null) {
             return false;
         }
-        
+
         // return false if next position is same as current
         if (curX == nextX && curY == nextY) {
             return false;
         }
-        
+
         Animal a = cur.getAnimal();
         // return false if next step is not accessible by chess piece
         if (! accessible(a, curX, curY, nextX, nextY)) {
             return false;
         }
-        
+
         // other pieces
         // ability to capture
-        
+
         // move piece
         board[nextX][nextY] = board[curX][curY];
         // remove piece from current location
         board[curX][curY] = null;
-        
+
         return true;
     }
-    
+
     /**
      * Checks if next location is accessible by chess piece 
      * Note it does not take into account whether that location is occupied by
@@ -134,39 +134,70 @@ public class ChessBoard {
     private boolean accessible (Animal a, int curX, int curY, int nextX, 
             int nextY) {
         //TODO: implement method
-        
+        // return false if intended square is more than one step away
+        // make exception for lion and tiger if next to river
+        if (!oneStepAway(curX, curY, nextX, nextY) 
+                && ! jumpException(a, curX, curY, nextX, nextY)) {
+            return false;
+        }
+
         // returns false if intended square is in river, and animal is not mouse
         if (inRiver(nextX, nextY) && ! a.toString().equals("MOUSE")) {
             return false;
         }
-        
+
         return true;
     }
-    
+
+    /** returns true if square is one step away */
+    private boolean oneStepAway(int curX, int curY, int nextX, int nextY) {
+        return ((Math.abs(nextX - curX) == 1 && nextY == curY) 
+                || (Math.abs(nextY - curY) == 1 && nextX == curX));
+    }
+
     /** returns true if square is in river. takes in its x,y coordinates */
     private boolean inRiver(int x, int y) {
         return (((x > 0 && x < 3) || (x > 3 && x < 6)) && (y > 2 && y < 6));
     }
     
+    /** 
+     * returns true if exception should be made because lions and tigers
+     * can jump over river
+     */
+    private boolean jumpException(Animal a, int curX, int curY, int nextX, 
+            int nextY) {
+        if (a.toString() != "LION" || a.toString() != "TIGER") {
+            return false;
+        }
+        return false;
+    }
+
     /** returns current player turn - true if red's, false if black */
     public boolean getTurn() {
         return player;
     }
-    
+
     /** sets next player's turn */
     public void setTurn(boolean turn) {
         this.player = turn;
     }
-    
+
     /** returns chess pieces */
     public ChessPiece[] getPieces () {
         return pieces;
     }
-    
+
     /**
      * resets chess pieces to start position
      */
     public void reset() {
+        // clear board
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j] = null;
+            }
+        }
+        // place pieces in starting positions
         board[0][0] = pieces[BLACK_LION];
         pieces[BLACK_LION].setX(0);
         pieces[BLACK_LION].setY(0);
@@ -220,5 +251,5 @@ public class ChessBoard {
             pieces[i].revive();
         }
     }
-    
+
 }

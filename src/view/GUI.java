@@ -19,11 +19,14 @@ import model.ChessBoard;
 @SuppressWarnings("serial")
 public class GUI extends JPanel {
     
+    private static BoardPanel panel;
+    private static Controller controller;
+    
     public GUI () {
         setLayout(new BorderLayout());
         // initialize chess board and it's controller
-        final BoardPanel panel = new BoardPanel(new ChessBoard());
-        final Controller controller = new Controller(panel);
+        panel = new BoardPanel(new ChessBoard());
+        controller = new Controller(panel);
         
         //TODO: indicate current player's turn
         
@@ -33,11 +36,11 @@ public class GUI extends JPanel {
         add (createOptionsToolbar(), BorderLayout.NORTH);
     }
     
-    /** creates options toolbar */
+    /** creates options tool bar */
     private static JPanel createOptionsToolbar() {
         final JPanel toolbar = new JPanel();
         toolbar.setLayout(new FlowLayout());
-        // add quit button
+        // quit button
         final JButton quit = new JButton("Quit");
         quit.addActionListener(new ActionListener() {
             @Override
@@ -45,9 +48,23 @@ public class GUI extends JPanel {
                 System.exit(0);
             }
         });
+        // re-match button
+        final JButton rematch = new JButton("Re-match");
+        rematch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                reset();
+            }
+        });
         toolbar.add(quit);
+        toolbar.add(rematch);
         
         return toolbar;
+    }
+    
+    /** resets panel */
+    private static void reset() {
+        controller.reset();
     }
   
 }

@@ -3,8 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-
 import view.*;
 import model.*;
 
@@ -33,20 +31,16 @@ public class Controller {
         SELECT, STEP
     }
 
-    /** store coordinates of selected square */
-    private static int x;
-    private static int y;
-
     /** store selected chess piece */
     private static ChessPiece selected;
 
     /** constructor */
     public Controller (BoardPanel panel) {
-        this.panel = panel;
-        this.board = panel.getChessBoard();
-        this.squares = panel.getSquares();
-        this.model = board.getModel();
-        this.mode = Mode.SELECT;
+        Controller.panel = panel;
+        Controller.board = panel.getChessBoard();
+        Controller.squares = Controller.panel.getSquares();
+        Controller.model = board.getModel();
+        Controller.mode = Mode.SELECT;
 
         addEventListeners();
     }
@@ -87,7 +81,6 @@ public class Controller {
         }
         // process selection
         if (x != -1 && y != -1) {
-
             switch (mode) {
             case SELECT:
                 selected = model[x][y];
@@ -96,23 +89,23 @@ public class Controller {
                     return;
                 }
                 // returns if piece does not belong to current player
-                boolean team = selected.getTeam();
-                if (team != board.getTurn()) {
+                if (selected.getTeam() != board.getTurn()) {
                     return;
                 }
                 // else go to STEP mode
                 mode = Mode.STEP;
-                // de-select all other buttons
-                for (int j = 0; j < squares[0].length; j++){
-                    for (int i = 0; i < squares.length; i++) {
-                        squares[i][j].setSelected(false);
-                        squares[i][j].setBorderPainted(false);
-                    }
-                }
-                // highlight this square
-                squares[x][y].setSelected(true);
+                updateSelection(x, y);
                 break;
             case STEP:
+                // change selected piece if on same team
+                if ((model[x][y] != null) && 
+                        (model[x][y].getTeam() == board.getTurn())) {
+                    // de-select all other buttons and highlight this square
+                    updateSelection(x, y);
+                    // update selected
+                    selected = model[x][y];
+                    break;
+                }
                 int origX = selected.getX();
                 int origY = selected.getY();
                 // get model to move piece if legal
@@ -138,6 +131,45 @@ public class Controller {
                 break;
             }
         }
+        panel.repaint();
+    }
+
+    /**
+     * de-selects all square and updates square if given
+     * does not update square if -1, -1 is passed in as an argument
+     * @param x x-coordinate of square
+     * @param y y-coordinate of square
+     */
+    private static void updateSelection(int x, int y) {
+        // de-select all squares
+        for (int j = 0; j < squares[0].length; j++){
+            for (int i = 0; i < squares.length; i++) {
+                squares[i][j].setSelected(false);
+                squares[i][j].setBorderPainted(false);
+            }
+        }
+        // highlight this square if needed
+        if (x != -1 && y != -1) {
+            squares[x][y].setSelected(true);
+        }
+    }
+
+    /** resets board panel and model */
+    public void reset() {
+        // reset mode to select and de-select all selected squares
+        mode = Mode.SELECT;
+        updateSelection(-1, -1);
+        // red team starts first
+        board.setTurn(true);
+        // reset model board
+        board.reset();
+        // clear all squares
+        for (int j = 0; j < squares[0].length; j++){
+            for (int i = 0; i < squares.length; i++) {
+                squares[i][j].removePiece();
+            }
+        }
+        // repaint panel
         panel.repaint();
     }
 }

@@ -79,7 +79,8 @@ public class BoardPanel extends JPanel {
         }
         drawPieces();
     }
-
+    
+    /** returns minimum size as the preferred size */
     @Override
     public Dimension getPreferredSize() {
         return MIN_SIZE;
