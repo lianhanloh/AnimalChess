@@ -109,8 +109,7 @@ public class ChessBoard {
             return false;
         }
 
-        // other pieces
-        // ability to capture
+        //TODO: ability to capture if other piece is present
 
         // move piece
         board[nextX][nextY] = board[curX][curY];
@@ -133,19 +132,16 @@ public class ChessBoard {
      */
     private boolean accessible (Animal a, int curX, int curY, int nextX, 
             int nextY) {
-        //TODO: implement method
         // return false if intended square is more than one step away
         // make exception for lion and tiger if next to river
         if (!oneStepAway(curX, curY, nextX, nextY) 
                 && !jumpException(a, curX, curY, nextX, nextY)) {
             return false;
         }
-
         // returns false if intended square is in river, and animal is not mouse
         if (inRiver(nextX, nextY) && ! a.toString().equals("MOUSE")) {
             return false;
         }
-
         return true;
     }
 
@@ -200,7 +196,6 @@ public class ChessBoard {
                 return true;
             }
         }
-
         // else return false
         return false;
     }
