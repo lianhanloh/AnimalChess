@@ -25,6 +25,8 @@ public class GUI extends JPanel {
         final BoardPanel panel = new BoardPanel(new ChessBoard());
         final Controller controller = new Controller(panel);
         
+        //TODO: indicate current player's turn
+        
         // add Chess board 
         add(panel, BorderLayout.CENTER);
         // add options tool bar at the top

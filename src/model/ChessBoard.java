@@ -17,7 +17,7 @@ public class ChessBoard {
 
     private static final int COL = 7;
     private static final int ROW = 9;
-    public boolean turn; // true if red, false if black
+    public boolean player; // true if red's turn, false if black's
     public ChessPiece[][] board;
     private static BufferedImage img;
     
@@ -137,6 +137,16 @@ public class ChessBoard {
         //TODO: implement method
         
         return true;
+    }
+    
+    /** returns current player turn - true if red's, false if black */
+    public boolean getTurn() {
+        return player;
+    }
+    
+    /** sets next player's turn */
+    public void setTurn(boolean turn) {
+        this.player = turn;
     }
     
     /** returns chess pieces */

@@ -17,10 +17,15 @@ import model.*;
 public class Controller {
 
     /** class fields */
+    /** Associated Chess Board */
     private static ChessBoard board;
+    /** Associated Board Panel */
     private static BoardPanel panel;
+    /** 2D array of invisible buttons */
     private static InvisibleButton[][] squares;
+    /** chess board model */
     private static ChessPiece[][] model;
+    /** current select mode */
     private static Mode mode;
 
     /** selection modes */
@@ -122,6 +127,8 @@ public class Controller {
                     // de-select initially chosen square
                     squares[origX][origY].setSelected(false);
                     squares[origX][origY].setBorderPainted(false);
+                    // update turn to next player's turn
+                    board.setTurn(! board.getTurn());
                 }
                 break;
             }
