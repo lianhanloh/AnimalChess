@@ -118,7 +118,7 @@ public class ChessBoard {
         }
         
         // set win to true if move will place chess piece in opponent's den
-        if (inDen(cur, nextX, nextY)) {
+        if (inOpponentDen(cur, nextX, nextY)) {
             this.win = true;
         }
         
@@ -210,10 +210,14 @@ public class ChessBoard {
         if (inRiver(nextX, nextY) && ! a.toString().equals("MOUSE")) {
             return false;
         }
+        //return false if intended location is chess piece's own den
+        if (inOwnDen(board[curX][curY], nextX, nextY)) {
+            return false;
+        }
+            
         return true;
     }
     
-    //TODO not accessible if it's your own den
 
     /** returns true if square is one step away */
     private boolean oneStepAway(int curX, int curY, int nextX, int nextY) {
@@ -229,8 +233,16 @@ public class ChessBoard {
     /** returns true if chess piece will be in opponent's den, given a piece and 
      * it's target x and y coordinates
      */
-    private boolean inDen (ChessPiece cp, int x, int y) {
-        return (cp.getTeam() && x == 3 && y == 0) || (cp.getTeam() 
+    private boolean inOpponentDen (ChessPiece cp, int x, int y) {
+        return (cp.getTeam() && x == 3 && y == 0) || (!cp.getTeam() 
+                && x == 3 && y == 8);
+    }
+    
+    /** returns true if chess piece will be in own den, given a piece and 
+     * it's target x and y coordinates
+     */
+    private boolean inOwnDen (ChessPiece cp, int x, int y) {
+        return (!cp.getTeam() && x == 3 && y == 0) || (cp.getTeam() 
                 && x == 3 && y == 8);
     }
 
