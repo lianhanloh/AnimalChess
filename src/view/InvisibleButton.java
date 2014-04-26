@@ -22,7 +22,6 @@ public class InvisibleButton extends JButton {
     /** class fields */
     private int thickness = 3;
     private Color highlight_color = Color.blue;
-    private Color img_border = Color.red;
     private boolean visible = false;
     private BufferedImage img;
     private int width;
