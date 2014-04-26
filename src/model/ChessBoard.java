@@ -83,7 +83,8 @@ public class ChessBoard {
     /** 
      * This method takes in a current position, and an intended position. 
      * If the move is legal, it moves the chess piece accordingly and returns 
-     * true. Otherwise it does nothing and returns false.
+     * true. It also updates win variable if game was won with that move.
+     * Otherwise it does nothing and returns false.
      * @param curX current x coordinate
      * @param curY current y coordinate
      * @param nextX intended x coordinate
@@ -91,7 +92,6 @@ public class ChessBoard {
      * @return
      */
     public boolean movePiece (int curX, int curY, int nextX, int nextY) {
-        //TODO add additional legality checks 
         ChessPiece cur = board[curX][curY];
         // return false if there's no piece at current location
         if (cur == null) {
@@ -102,7 +102,7 @@ public class ChessBoard {
         if (curX == nextX && curY == nextY) {
             return false;
         }
-
+        
         Animal a = cur.getAnimal();
         // return false if next step is not accessible by chess piece
         if (! accessible(a, curX, curY, nextX, nextY)) {
@@ -110,36 +110,62 @@ public class ChessBoard {
         }
 
         // capture target if square is occupied by opponent piece and can be 
-        // capture by cur piece
-        if (board[nextX][nextY] != null) {
-            ChessPiece target = board[nextX][nextY];
-            Animal b = target.getAnimal();
-            // return false if target chess piece has higher rank
-            // unless cur is mouse
-            if (cur.compareTo(target) < 0 && ! a.toString().equals("MOUSE")) {
-                return false;
-            }
-            // mouse can only capture elephant 
-            // note mouse cannot capture elephant if mouse is in river
-            if ((a.toString().equals("MOUSE")
-                    && !b.toString().equals("ELEPHANT"))
-                    || inRiver(curX, curY)){
-                return false;
-            }
-            // elephant cannot capture mouse
-            if (a.toString().equals("ELEPHANT") 
-                    && b.toString().equals("MOUSE")) {
-                return false;
-            }
-            // capture target piece
-            target.capture();
+        // captured by cur piece. return false if target square is occupied
+        // and capture is invalid
+        if (board[nextX][nextY] != null 
+                && ! capture(curX, curY, nextX, nextY, cur)) {
+            return false;
         }
         
-        // move piece
+        // set win to true if move will place chess piece in opponent's den
+        if (inDen(cur, nextX, nextY)) {
+            this.win = true;
+        }
+        
+        // move piece and remove from current location
         board[nextX][nextY] = board[curX][curY];
-        // remove piece from current location
         board[curX][curY] = null;
 
+        return true;
+    }
+
+    /**
+     * Given the current position of a chess piece and the position of it's 
+     * target, captures piece returns true if capture is valid. returns false
+     * and does nothing if capture is invalid
+     * @param curX x coordinate of chess piece
+     * @param curY y coordinate of chess piece
+     * @param nextX x coordinate of target piece
+     * @param nextY y coordinate of target piece
+     * @param cur current chess piece
+     * @return true if piece was captured, false if capture is not valid
+     */
+    private boolean capture(int curX, int curY, int nextX, int nextY,
+            ChessPiece cur) {
+        Animal a = cur.getAnimal();
+        ChessPiece target = board[nextX][nextY];
+        Animal b = target.getAnimal();
+        // return false if target chess piece has higher rank
+        // unless cur is mouse or unless target is in trap
+        if (cur.compareTo(target) < 0 && ! a.toString().equals("MOUSE")
+                && ! inTrap(target, nextX, nextY)) {
+            return false;
+        }
+        // mouse can only capture elephant and mouse
+        // note mouse cannot capture elephant if either mouse is in river
+        if ((a.toString().equals("MOUSE")
+                && !b.toString().equals("ELEPHANT") 
+                && !b.toString().equals("MOUSE"))
+                || inRiver(curX, curY) || inRiver(nextX, nextY)){
+            return false;
+        }
+        // elephant cannot capture mouse
+        if (a.toString().equals("ELEPHANT") 
+                && b.toString().equals("MOUSE")) {
+            return false;
+        }
+        // capture target piece
+        target.capture();
         return true;
     }
 
@@ -147,7 +173,7 @@ public class ChessBoard {
      * Checks if next location is accessible by chess piece 
      * Note it does not take into account whether that location is occupied by
      * another chess piece
-     * @param cur chess piece's animal
+     * @param a chess piece's animal
      * @param curX current X coordinate
      * @param curY current Y coordinate
      * @param nextX intended X coordinate
@@ -178,6 +204,28 @@ public class ChessBoard {
     /** returns true if square is in river. takes in its x,y coordinates */
     private boolean inRiver(int x, int y) {
         return (((x > 0 && x < 3) || (x > 3 && x < 6)) && (y > 2 && y < 6));
+    }
+
+    /** returns true if chess piece will be in opponent's den, given a piece and 
+     * it's target x and y coordinates
+     */
+    private boolean inDen (ChessPiece cp, int x, int y) {
+        return (cp.getTeam() && x == 3 && y == 0) || (cp.getTeam() 
+                && x == 3 && y == 8);
+    }
+
+    /** returns true if chess piece is in trap, given a piece and it's current
+     * x and y coordinates
+     */
+    private boolean inTrap (ChessPiece cp, int x, int y) {
+        if (cp.getTeam()) {
+            return (x == 2 && y == 0) || (x == 3 && y == 1) || (x == 4 
+                    && y == 0);
+        }
+        else {
+            return (x == 2 && y == 8) || (x == 3 && y == 7) || (x == 4 
+                    && y == 8);
+        }
     }
 
     /** 
