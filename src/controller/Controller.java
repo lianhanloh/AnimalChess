@@ -125,6 +125,13 @@ public class Controller {
                     // de-select initially chosen square
                     squares[origX][origY].setSelected(false);
                     squares[origX][origY].setBorderPainted(false);
+                    // TODO: handle case if game has been won
+                    if (board.gameWon()) {
+                        // perhaps controller should take in GUI as constructor
+                        // instead of board panel
+                        System.out.println("game over!");
+                    }
+                    
                     // update turn to next player's turn
                     board.setTurn(!board.getTurn());
                 }
@@ -161,6 +168,8 @@ public class Controller {
         updateSelection(-1, -1);
         // red team starts first
         board.setTurn(true);
+        // set win to false
+        board.setWin(false);
         // reset model board
         board.reset();
         // clear all squares

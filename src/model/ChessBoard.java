@@ -122,11 +122,29 @@ public class ChessBoard {
             this.win = true;
         }
         
+        // set win to true if no enemy's piece are left alive
+        for (int i = 0; i < pieces.length; i++) {
+            if (cur.getTeam() != pieces[i].getTeam() && pieces[i].isAlive()) {
+                break;
+            }
+            if (i == pieces.length - 1) this.win = true;
+        }
+        
         // move piece and remove from current location
         board[nextX][nextY] = board[curX][curY];
         board[curX][curY] = null;
 
         return true;
+    }
+    
+    /** returns win status, true if game has been won, false otherwise */
+    public boolean gameWon() {
+        return this.win;
+    }
+    
+    /** takes in a boolean and sets win status. */
+    public void setWin(boolean win) {
+        this.win = win;
     }
 
     /**
@@ -194,6 +212,8 @@ public class ChessBoard {
         }
         return true;
     }
+    
+    //TODO not accessible if it's your own den
 
     /** returns true if square is one step away */
     private boolean oneStepAway(int curX, int curY, int nextX, int nextY) {

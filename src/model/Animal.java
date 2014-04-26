@@ -13,5 +13,5 @@ package model;
  */
 
 enum Animal {
-    MOUSE, CAT, WOLF, DOG, LEOPARD, TIGER, LION, ELEPHANT
+    MOUSE, CAT, DOG, WOLF, LEOPARD, TIGER, LION, ELEPHANT
 }
