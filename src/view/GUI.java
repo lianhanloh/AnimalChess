@@ -56,7 +56,9 @@ public class GUI extends JPanel {
         instructions.setLocation(400, 100);
         instructions.setResizable(false);
         // add instructions
-        Instructions instructionLabel = new Instructions();
+        ImageIcon img = new ImageIcon("images/instructions.png");
+        JLabel instructionLabel = new JLabel(img);
+        instructionLabel.setPreferredSize(new Dimension(629,540));
         instructions.add(instructionLabel, BorderLayout.CENTER);
         // add button to close instructions frame
         JPanel options = new JPanel();

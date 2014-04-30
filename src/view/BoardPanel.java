@@ -96,6 +96,7 @@ public class BoardPanel extends JPanel {
         for (int y = 0; y < ROW; y++) {
             for (int x = 0; x < COL; x++) {
                 squares[x][y] = new InvisibleButton();
+                squares[x][y].setSelected(false);
                 add(squares[x][y]);
             }
         }
