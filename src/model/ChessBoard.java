@@ -170,11 +170,12 @@ public class ChessBoard {
             return false;
         }
         // mouse can only capture elephant and mouse
-        // note mouse cannot capture elephant if either mouse is in river
+        // note a mouse cannot capture the other mouse unless they are either 
+        // both in the river, or both on land
         if ((a.toString().equals("MOUSE")
                 && !b.toString().equals("ELEPHANT") 
                 && !b.toString().equals("MOUSE"))
-                || inRiver(curX, curY) || inRiver(nextX, nextY)){
+                || (inRiver(curX, curY) != inRiver(nextX, nextY))){
             return false;
         }
         // elephant cannot capture mouse
