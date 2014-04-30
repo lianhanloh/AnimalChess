@@ -3,8 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-
 import view.*;
 import model.*;
 
@@ -17,8 +15,6 @@ import model.*;
 public class Controller {
 
     /** class fields */
-    /** Associated Instructions Frame */
-    private static JFrame instructions;
     /** Associated Chess Board */
     private static ChessBoard board;
     /** Associated Board Panel */
@@ -39,8 +35,7 @@ public class Controller {
     private static ChessPiece selected;
 
     /** constructor */
-    public Controller (BoardPanel panel, JFrame instructions) {
-        Controller.instructions = instructions;
+    public Controller (BoardPanel panel) {
         Controller.panel = panel;
         Controller.board = panel.getChessBoard();
         Controller.squares = Controller.panel.getSquares();
@@ -187,8 +182,4 @@ public class Controller {
         panel.repaint();
     }
     
-    /** show instructions */
-    public void showInstructions() {
-        instructions.setVisible(true);
-    }
 }

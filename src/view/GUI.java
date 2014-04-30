@@ -3,7 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +12,7 @@ import controller.Controller;
 import model.ChessBoard;
 
 /**
- * This class layouts the GUI for the game
+ * This class lays out the game's GUI 
  * 
  * @author lianhanloh
  *
@@ -30,7 +29,7 @@ public class GUI extends JPanel {
         // initialize chess board and it's controller
         panel = new BoardPanel(new ChessBoard());
         createInstructions();
-        controller = new Controller(panel, instructions);
+        controller = new Controller(panel);
 
         //TODO: indicate current player's turn
 
@@ -38,7 +37,6 @@ public class GUI extends JPanel {
         add(panel, BorderLayout.CENTER);
         // add options tool bar at the top
         add (createOptionsToolbar(), BorderLayout.NORTH);
-
     }
 
     /** create instructions JFrame */
@@ -49,18 +47,11 @@ public class GUI extends JPanel {
         // set up location and size
         instructions.setLocation(400, 100);
         instructions.setResizable(true);
-        // Set instructions frame invisible by default
-        instructions.pack();
-        instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        instructions.setVisible(false);
-//        JPanel center = new JPanel();
+        // add instructions
         ImageIcon img = new ImageIcon("images/instructions.png");
         JLabel instructionLabel = new JLabel(img);
         Dimension instructionDim = new Dimension(300, 400);
         instructionLabel.setPreferredSize(instructionDim);
-        instructionLabel.setMinimumSize(instructionDim);
-//        center.add(instructionLabel);
-//        center.setPreferredSize(instructionDim);
         instructions.add(instructionLabel, BorderLayout.CENTER);
         // add button to close instructions frame
         JPanel options = new JPanel();
@@ -73,6 +64,10 @@ public class GUI extends JPanel {
         });
         options.add(closeInstructions);
         instructions.add(options, BorderLayout.SOUTH);
+        // Set instructions frame invisible by default
+        instructions.pack();
+        instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        instructions.setVisible(false);
         return instructions;
     }
 
@@ -101,7 +96,7 @@ public class GUI extends JPanel {
         showInstructions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                showInstructions();
+                instructions.setVisible(true);
             }
         });
         toolbar.add(quit);
@@ -116,8 +111,4 @@ public class GUI extends JPanel {
         controller.reset();
     }
 
-    /** show instructions */
-    private static void showInstructions() {
-        controller.showInstructions();
-    }
 }

@@ -17,7 +17,7 @@ public class Game implements Runnable {
     public void run() {
         
         // initialize frame and set location
-        JFrame frame = new JFrame ("Animal Chess");
+        final JFrame frame = new JFrame ("Animal Chess");
         
         // set up location and size
         frame.setLocation(300, 100);
