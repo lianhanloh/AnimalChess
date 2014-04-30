@@ -3,6 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import view.*;
 import model.*;
 
@@ -25,9 +28,21 @@ public class Controller {
     private static ChessPiece[][] model;
     /** current select mode */
     private static Mode mode;
+    /** frame to display when game is won */
+    private static JFrame winFrame;
+    /** JLabel for win frame */
+    private static JLabel winMessage;
+    /** score label */
+    private static JLabel scoreLabel;
+    /** stores win status - true if game has been won, false if not */
+    private static boolean win = false;
+    /** black's current score */
+    private static int black = 0;
+    /** red's current score */
+    private static int red = 0;
 
     /** selection modes */
-    public enum Mode {
+    enum Mode {
         SELECT, STEP
     }
 
@@ -35,12 +50,16 @@ public class Controller {
     private static ChessPiece selected;
 
     /** constructor */
-    public Controller (BoardPanel panel) {
+    public Controller (BoardPanel panel, JFrame winFrame, JLabel winMessage,
+            JLabel scoreLabel) {
         Controller.panel = panel;
         Controller.board = panel.getChessBoard();
         Controller.squares = Controller.panel.getSquares();
         Controller.model = board.getModel();
         Controller.mode = Mode.SELECT;
+        Controller.winFrame = winFrame;
+        Controller.winMessage = winMessage;
+        Controller.scoreLabel = scoreLabel;
 
         addEventListeners();
     }
@@ -55,7 +74,12 @@ public class Controller {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        processSelection(e);
+                        // only process if win is set to false
+                        // board grid cannot be clicked if one of the players
+                        // has won and board has not been reset
+                        if (!win) {
+                            processSelection(e);
+                        }
                     }                  
                 });
             }
@@ -127,11 +151,10 @@ public class Controller {
                     squares[origX][origY].setBorderPainted(false);
                     // TODO: handle case if game has been won
                     if (board.gameWon()) {
-                        // perhaps controller should take in GUI as constructor
-                        // instead of board panel
-                        System.out.println("game over!");
+                        win = true;
+                        break;
                     }
-                    
+
                     // update turn to next player's turn
                     board.setTurn(!board.getTurn());
                 }
@@ -139,6 +162,11 @@ public class Controller {
             }
         }
         panel.repaint();
+        // display game won frame and update score if game won
+        if (win) {
+            showWinMessage();
+            updateScore();
+        }
     }
 
     /**
@@ -170,6 +198,7 @@ public class Controller {
         board.setTurn(true);
         // set win to false
         board.setWin(false);
+        win = false;
         // reset model board
         board.reset();
         // clear all squares
@@ -178,8 +207,28 @@ public class Controller {
                 squares[i][j].removePiece();
             }
         }
+        // remove win display if it's visible
+        winFrame.setVisible(false);
         // repaint panel
         panel.repaint();
     }
-    
+
+    /** display game won frame */
+    private static void showWinMessage() {
+        if (board.getTurn()) {
+            red++; // increment red's score
+            winMessage.setText("Red wins! Click rematch or quit");
+        }
+        else {
+            black++; // increment black's score
+            winMessage.setText("Black wins! Click rematch or quit");
+        }
+        winFrame.setVisible(true);
+    }
+
+    /** updates score label */
+    private static void updateScore() {
+        String score = "Red: " + red + " Black: " + black;
+        scoreLabel.setText(score);
+    }
 }

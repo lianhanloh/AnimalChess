@@ -23,20 +23,28 @@ public class GUI extends JPanel {
     private static BoardPanel panel;
     private static Controller controller;
     private static JFrame instructions;
+    private static JLabel score;
+    private static JFrame winFrame;
+    private static JLabel winMessage;
+    private static final JPanel toolbar = new JPanel();
+    private static final JButton rematch = new JButton("Re-match");
+    private static final JButton quit = new JButton("Quit");
+    private static final JButton showInstructions = new JButton("Instructions");
 
     public GUI () {
         setLayout(new BorderLayout());
-        // initialize chess board and it's controller
+        // initialize chess board
         panel = new BoardPanel(new ChessBoard());
-        createInstructions();
-        controller = new Controller(panel);
-
-        //TODO: indicate current player's turn
-
         // add Chess board 
         add(panel, BorderLayout.CENTER);
         // add options tool bar at the top
-        add (createOptionsToolbar(), BorderLayout.NORTH);
+        add (createToolbar(), BorderLayout.NORTH);
+        setUpWinFrame();
+        // initialize controller
+        controller = new Controller(panel, winFrame, winMessage, score);
+
+        // set up instructions frame
+        createInstructions();
     }
 
     /** create instructions JFrame */
@@ -50,8 +58,7 @@ public class GUI extends JPanel {
         // add instructions
         ImageIcon img = new ImageIcon("images/instructions.png");
         JLabel instructionLabel = new JLabel(img);
-        Dimension instructionDim = new Dimension(300, 400);
-        instructionLabel.setPreferredSize(instructionDim);
+        instructionLabel.setPreferredSize(new Dimension(300,400));
         instructions.add(instructionLabel, BorderLayout.CENTER);
         // add button to close instructions frame
         JPanel options = new JPanel();
@@ -72,38 +79,55 @@ public class GUI extends JPanel {
     }
 
     /** creates options tool bar */
-    private static JPanel createOptionsToolbar() {
-        final JPanel toolbar = new JPanel();
+    private static JPanel createToolbar() {
         toolbar.setLayout(new FlowLayout());
-        // quit button
-        final JButton quit = new JButton("Quit");
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                System.exit(0);
-            }
-        });
-        // re-match button
-        final JButton rematch = new JButton("Re-match");
+        // add action listeners to quit, rematch, and show instruction buttons
+        addActionListeners();
+        // add buttons to toolbar
+        toolbar.add(quit);
+        toolbar.add(rematch);
+        toolbar.add(showInstructions);
+        // add score display
+        score = new JLabel("Red: 0 Black: 0");
+        toolbar.add(score);
+        return toolbar;
+    }
+
+    /** sets up frame to be displayed when one player wins */
+    private void setUpWinFrame() {
+        winFrame = new JFrame("Congratulations");
+        // add message label
+        winMessage = new JLabel();
+        winMessage.setHorizontalAlignment(SwingConstants.CENTER);
+        winMessage.setPreferredSize(new Dimension(250,20));
+        winFrame.add(winMessage);
+
+        // set frame properties
+        winFrame.setLocation(400,300);
+        winFrame.pack();
+        winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winFrame.setVisible(false);
+    }
+
+    private static void addActionListeners() {
         rematch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 reset();
             }
         });
-        // show instructions button
-        final JButton showInstructions = new JButton("Instructions");
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.exit(0);
+            }
+        });
         showInstructions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 instructions.setVisible(true);
             }
         });
-        toolbar.add(quit);
-        toolbar.add(rematch);
-        toolbar.add(showInstructions);
-
-        return toolbar;
     }
 
     /** resets panel */
