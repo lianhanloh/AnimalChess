@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,24 +20,62 @@ import model.ChessBoard;
  */
 @SuppressWarnings("serial")
 public class GUI extends JPanel {
-    
+
     private static BoardPanel panel;
     private static Controller controller;
-    
+    private static JFrame instructions;
+
     public GUI () {
         setLayout(new BorderLayout());
         // initialize chess board and it's controller
         panel = new BoardPanel(new ChessBoard());
-        controller = new Controller(panel);
-        
+        createInstructions();
+        controller = new Controller(panel, instructions);
+
         //TODO: indicate current player's turn
-        
+
         // add Chess board 
         add(panel, BorderLayout.CENTER);
         // add options tool bar at the top
         add (createOptionsToolbar(), BorderLayout.NORTH);
+
     }
-    
+
+    /** create instructions JFrame */
+    private JFrame createInstructions () {
+        // initialize JFrame
+        instructions = new JFrame("Instructions");
+        instructions.setLayout(new BorderLayout());
+        // set up location and size
+        instructions.setLocation(400, 100);
+        instructions.setResizable(true);
+        // Set instructions frame invisible by default
+        instructions.pack();
+        instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        instructions.setVisible(false);
+//        JPanel center = new JPanel();
+        ImageIcon img = new ImageIcon("images/instructions.png");
+        JLabel instructionLabel = new JLabel(img);
+        Dimension instructionDim = new Dimension(300, 400);
+        instructionLabel.setPreferredSize(instructionDim);
+        instructionLabel.setMinimumSize(instructionDim);
+//        center.add(instructionLabel);
+//        center.setPreferredSize(instructionDim);
+        instructions.add(instructionLabel, BorderLayout.CENTER);
+        // add button to close instructions frame
+        JPanel options = new JPanel();
+        JButton closeInstructions = new JButton("Okay");
+        closeInstructions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                instructions.setVisible(false);
+            }
+        });
+        options.add(closeInstructions);
+        instructions.add(options, BorderLayout.SOUTH);
+        return instructions;
+    }
+
     /** creates options tool bar */
     private static JPanel createOptionsToolbar() {
         final JPanel toolbar = new JPanel();
@@ -56,15 +96,28 @@ public class GUI extends JPanel {
                 reset();
             }
         });
+        // show instructions button
+        final JButton showInstructions = new JButton("Instructions");
+        showInstructions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                showInstructions();
+            }
+        });
         toolbar.add(quit);
         toolbar.add(rematch);
-        
+        toolbar.add(showInstructions);
+
         return toolbar;
     }
-    
+
     /** resets panel */
     private static void reset() {
         controller.reset();
     }
-  
+
+    /** show instructions */
+    private static void showInstructions() {
+        controller.showInstructions();
+    }
 }
