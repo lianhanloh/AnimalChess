@@ -9,9 +9,7 @@ Usage Instructions
 The game has a main method in Game.java and can be run with the command java Game.
 Instructions are available from within the game. 
 
-Further descriptons/ instructions of this game can be found here at these sites:
-http://ancientchess.com/page/play-doushouqi.htm
-http://veryspecial.us/free-downloads/AncientChess.com-DouShouQi.pdf
+Further descriptons/ instructions of this game can be found [here] (http://ancientchess.com/page/play-doushouqi.htm) and [here] (http://veryspecial.us/free-downloads/AncientChess.com-DouShouQi.pdf).
 
 Game Implementation
 ====================
