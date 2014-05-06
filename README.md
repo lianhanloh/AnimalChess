@@ -7,7 +7,9 @@ Usage Instructions
 ====================
 
 The game has a main method in Game.java and can be run with the command java Game.
-Instructions are available from within the game. 
+To run the game on your computer, download files.zip within the submission folder and run the
+following command from terminal: javac *.java && java Game
+Detailed instructions are available from within the game. 
 
 Further descriptons/ instructions of this game can be found [here] (http://ancientchess.com/page/play-doushouqi.htm) and [here] (http://veryspecial.us/free-downloads/AncientChess.com-DouShouQi.pdf).
 
