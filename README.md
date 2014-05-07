@@ -3,7 +3,7 @@ Animal Chess
 
 This program implements the game Animal Chess.
 
-![Chess board](images/game.png)
+![](images/game.png)
 
 Usage Instructions
 ====================
