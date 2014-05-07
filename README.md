@@ -3,14 +3,18 @@ Animal Chess
 
 This program implements the game Animal Chess.
 
+![Chess board](images/game.png)
+
 Usage Instructions
 ====================
 
 The game has a main method in Game.java and can be run with the command java Game.
 To run the game on your computer, download files.zip within the submission folder and run the
-following command from terminal: javac *.java && java Game.
+following command from terminal: javac \*.java && java Game
 
 Detailed instructions are available from within the game. 
+
+![](images/instructions.png)
 
 Further descriptions/ instructions of this game can be found [here] (http://ancientchess.com/page/play-doushouqi.htm) and [here] (http://veryspecial.us/free-downloads/AncientChess.com-DouShouQi.pdf).
 
@@ -43,4 +47,4 @@ match and update scores.
 Image Credit
 ====================
 The chess board and chess pieces images were borrowed from a free iPhone app called Animal Chess
-online by MegaLab. 
+online by MegaLab.
