@@ -10,7 +10,7 @@ Usage Instructions
 
 The game has a main method in Game.java and can be run with the command java Game.
 To run the game on your computer, download files.zip within the submission folder and run the
-following command from terminal: javac \*.java && java Game
+following command from terminal: <code>javac \*.java && java Game</code>
 
 Detailed instructions are available from within the game. 
 
