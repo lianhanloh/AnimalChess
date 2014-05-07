@@ -3,7 +3,7 @@ Animal Chess
 
 This program implements the game Animal Chess.
 
-<img src="images/game.png" width="100px" height = "130px">
+<img src="images/game.png" width="300px" height = "400px">
 
 Usage Instructions
 ====================
