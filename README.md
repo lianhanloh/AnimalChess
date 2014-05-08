@@ -16,7 +16,7 @@ Detailed instructions are available from within the game.
 
 ![](images/instructions.png)
 
-Further descriptions/ instructions of this game can be found [here] (http://ancientchess.com/page/play-doushouqi.htm) and [here] (http://veryspecial.us/free-downloads/AncientChess.com-DouShouQi.pdf).
+Further descriptions/ instructions of this game can be found [here] (http://ancientchess.com/page/play-doushouqi.htm).
 
 Game Implementation
 ====================
